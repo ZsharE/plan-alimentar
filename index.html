@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ro">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Planul meu alimentar in boala Crohn</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Google Fonts: Lexend -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Lexend", "sans-serif"],
+                        },
+                        colors: {
+                            crem: {
+                                50: "#FAF8F5" /* Alabastru cald */,
+                                100: "#F4EFEA" /* Nisip deschis / Sidebar */,
+                                200: "#EADFCF" /* Border foarte fin */,
+                            },
+                            espresso: "#2C2520" /* Text cald și citibil */,
+                            padure: {
+                                50: "#EAF1EC" /* Verde foarte deschis */,
+                                600: "#1E4630" /* Deep Forest Green */,
+                            },
+                            taupe: "#A08C75" /* Detalii elegante */,
+                        },
+                    },
+                },
+            };
+        </script>
+
+        <style>
+            /* Stiluri premium pentru textul randat din Markdown */
+            #content h3 {
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: #1e4630;
+                margin-top: 1.5rem;
+                margin-bottom: 1rem;
+                letter-spacing: -0.02em;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            /* Stilizare automată pentru iconițele Lucide din interiorul titlurilor */
+            #content h3 svg {
+                width: 1.5rem;
+                height: 1.5rem;
+                color: #1e4630;
+                stroke-width: 2px;
+            }
+            #content h4 {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: #1e4630;
+                margin-top: 1.5rem;
+                margin-bottom: 1rem;
+                letter-spacing: -0.02em;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            #content p {
+                margin-bottom: 1.25rem;
+                font-weight: 300;
+                color: #2c2520;
+            }
+            #content ul {
+                margin-bottom: 1.75rem;
+            }
+            #content ul li {
+                position: relative;
+                padding-left: 1.75rem;
+                margin-bottom: 0.85rem;
+                font-weight: 300;
+            }
+            /* Noul marcator de listă: un romb fin, geometric, aliniat perfect cu textul */
+            #content ul li::before {
+                content: "";
+                position: absolute;
+                left: 6px;
+                top: 0.75em; /* Se aliniază perfect indiferent de dimensiunea textului */
+                width: 5px;
+                height: 5px;
+                background-color: #a08c75;
+                transform: translateY(-50%) rotate(45deg);
+                border-radius: 1px; /* Colțuri ușor rotunjite pentru finețe */
+            }
+            #content blockquote {
+                border-left: 3px solid #1e4630;
+                padding: 0.5rem 0 0.5rem 1.5rem;
+                color: #a08c75;
+                font-style: italic;
+                margin: 2rem 0;
+                background-color: #f4efea;
+                border-radius: 0 8px 8px 0;
+            }
+            /* Indicatorul fluid pentru sidebar */
+            .tab-indicator {
+                transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+        </style>
+
+        <!-- Parser Markdown -->
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body class="bg-crem-50 text-espresso font-sans antialiased min-h-screen flex flex-col md:flex-row">
+        <!-- SIDEBAR (Desktop) -->
+        <aside class="hidden md:flex md:w-72 md:h-screen md:fixed md:top-0 md:left-0 md:flex-col md:border-r md:border-crem-200 p-8 gap-8 z-10 bg-crem-100">
+            <div class="flex items-center gap-3">
+                <h2 class="text-lg font-semibold text-padure-600 tracking-tight">Navigație</h2>
+            </div>
+
+            <!-- Navigare Desktop -->
+            <nav class="relative flex flex-col gap-1.5">
+                <!-- Indicator fluid -->
+                <div
+                    id="desktop-indicator"
+                    class="tab-indicator absolute left-0 w-full bg-white shadow-sm border border-crem-200/50 rounded-xl pointer-events-none"
+                    style="height: 44px; top: 0px"
+                ></div>
+
+                <button
+                    class="tab-btn relative z-10 text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-sm font-light hover:text-padure-600 transition-colors"
+                    onclick="switchTab('principii', this)"
+                >
+                    <i data-lucide="book-open" class="w-4 h-4 text-taupe"></i> Principii
+                </button>
+                <button
+                    class="tab-btn relative z-10 text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-sm font-light hover:text-padure-600 transition-colors"
+                    onclick="switchTab('echipamente', this)"
+                >
+                    <i data-lucide="cooking-pot" class="w-4 h-4 text-taupe"></i> Echipamente
+                </button>
+                <button
+                    class="tab-btn relative z-10 text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-sm font-light hover:text-padure-600 transition-colors"
+                    onclick="switchTab('mic-dejun', this)"
+                >
+                    <i data-lucide="sunrise" class="w-4 h-4 text-taupe"></i> Mic Dejun
+                </button>
+                <button
+                    class="tab-btn relative z-10 text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-sm font-light hover:text-padure-600 transition-colors"
+                    onclick="switchTab('pranz', this)"
+                >
+                    <i data-lucide="sun" class="w-4 h-4 text-taupe"></i> Prânz
+                </button>
+                <button
+                    class="tab-btn relative z-10 text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-sm font-light hover:text-padure-600 transition-colors"
+                    onclick="switchTab('cina', this)"
+                >
+                    <i data-lucide="moon" class="w-4 h-4 text-taupe"></i> Cină
+                </button>
+                <button
+                    class="tab-btn relative z-10 text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-sm font-light hover:text-padure-600 transition-colors"
+                    onclick="switchTab('gustari', this)"
+                >
+                    <i data-lucide="coffee" class="w-4 h-4 text-taupe"></i> Gustări
+                </button>
+            </nav>
+        </aside>
+
+        <!-- ZONA PRINCIPALA DE CONȚINUT -->
+        <main class="flex-1 md:ml-72 max-w-3xl px-6 py-8 md:px-16 md:py-16 pb-32 md:pb-16 flex flex-col min-h-screen">
+            <header class="border-b border-crem-200 pb-6 mb-8 flex items-center gap-4">
+                <div class="p-2.5 bg-padure-600 rounded-2xl text-white shadow-sm">
+                    <i data-lucide="leaf" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-padure-600 tracking-tight">Plan alimentar</h1>
+                    <p class="text-xs text-taupe uppercase tracking-widest mt-1 font-medium">Boala Crohn</p>
+                </div>
+            </header>
+
+            <div id="content-container" class="flex-1">
+                <div id="content" class="transition-all duration-1000 ease-out transform translate-y-0 opacity-100">
+                    Se încarcă secțiunea...
+                </div>
+            </div>
+        </main>
+
+        <!-- BARA DE NAVIGARE DE JOS (Mobil) -->
+        <nav
+            class="md:hidden fixed bottom-5 left-4 right-4 bg-white/90 backdrop-blur-md border border-crem-200 shadow-xl rounded-2xl p-2 z-50 flex justify-between items-center"
+        >
+            <button
+                class="tab-btn-mob flex-1 flex flex-col items-center py-2.5 rounded-xl transition-all"
+                onclick="switchTab('principii', this)"
+            >
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+            </button>
+            <button
+                class="tab-btn-mob flex-1 flex flex-col items-center py-2.5 rounded-xl transition-all"
+                onclick="switchTab('echipamente', this)"
+            >
+                <i data-lucide="cooking-pot" class="w-5 h-5"></i>
+            </button>
+            <button
+                class="tab-btn-mob flex-1 flex flex-col items-center py-2.5 rounded-xl transition-all"
+                onclick="switchTab('mic-dejun', this)"
+            >
+                <i data-lucide="sunrise" class="w-5 h-5"></i>
+            </button>
+            <button
+                class="tab-btn-mob flex-1 flex flex-col items-center py-2.5 rounded-xl transition-all"
+                onclick="switchTab('pranz', this)"
+            >
+                <i data-lucide="sun" class="w-5 h-5"></i>
+            </button>
+            <button
+                class="tab-btn-mob flex-1 flex flex-col items-center py-2.5 rounded-xl transition-all"
+                onclick="switchTab('cina', this)"
+            >
+                <i data-lucide="moon" class="w-5 h-5"></i>
+            </button>
+            <button
+                class="tab-btn-mob flex-1 flex flex-col items-center py-2.5 rounded-xl transition-all"
+                onclick="switchTab('gustari', this)"
+            >
+                <i data-lucide="coffee" class="w-5 h-5"></i>
+            </button>
+        </nav>
+
+        <script>
+            const pages = {
+                principii: `
+### <i data-lucide="book-open"></i> Principiile generale
+* Consumă alimente proaspete, neprocesate și cu etichetă curată – gătite întotdeauna foarte bine (fierte, la abur sau coapte), pentru a fi ușor de digerat și blânde cu intestinul.
+* Zero zahăr – folosește în schimb miere, sirop de arțar sau stevia pură.
+* Grăsimi permise: ulei de măsline, unt ghee, ulei MCT.
+* Mese mici și frecvente (3 mese principale și 2 gustări), cu o pauză de 2-3 ore între ele.
+* Mestecă mâncarea foarte bine.
+* Introdu alimentele noi treptat.
+* Hidratează-te corespunzător – consumă lichide la temperatura camerei sau călduțe, cu înghițituri mici și constante pe parcursul întregii zile.
+* Evită complet băuturile carbogazoase, cofeina și alcoolul.
+                `,
+                echipamente: `
+### <i data-lucide="cooking-pot"></i> Echipamente esențiale
+* Oală sub presiune
+* Sită pentru gătit la abur
+* Blender
+* Strecurătoare fină
+      `,
+                "mic-dejun": `
+### <i data-lucide="sunrise"></i> Mic dejun
+* Ouă preparate simplu: fierte moi, poșate sau jumări moi.
+* Budincă de ovăz sau de tapiocă preparată cu lapte de ovăz, banane, afine, miere, ulei MCT și scorțișoară Ceylon.
+* Avocado (bine copt, pasat / blenduit).
+* Pastă de măsline preparată cu ulei de măsline.
+* Brânzeturi maturate: parmezan, grana padano, cheddar, pecorino romano, gouda.
+* Clătite sau gofre cu unt de arahide, banane și miere.
+* Pâine prăjită.
+      `,
+                pranz: `
+### <i data-lucide="sun"></i> Prânz
+* Supă de oase – folosită ca bază pentru orice supă sau ciorbă.
+* Supă de pui sau de curcan cu rădăcinoase (morcovi, țelină, păstârnac) și fidea sau găluște.
+* Supă-cremă de rădăcinoase cu morcovi, cartofi dulci, păstârnac și carne fiartă (cu fidea pentru un plus de calorii).
+* Ciorbă de pui, curcan sau vită cu orez și multe legume (morcovi, țelină, păstârnac, ardei gras, păstăi de fasole galbenă, mazăre, dovlecel, roșii).
+* Ciorbă de perișoare.
+* Ardei sau dovlecei umpluți cu carne, orez și legume.
+* Orez cu legume (ceapă, dovlecel, ardei gras, morcov).
+* Fasole galbenă păstăi bine fiartă, cu morcov, ardei gras, ceapă, usturoi și carne.
+* Musaca de legume cu carne tocată.
+* ...
+      `,
+                cina: `
+### <i data-lucide="moon"></i> Cină
+* Pește la cuptor pe pat de dovlecei.
+* Pulpe de pui la cuptor cu cartofi, dovlecei și morcovi.
+* Sufleu de legume la cuptor cu dovlecei, cartofi, morcovi, brânză maturată, ouă, verdeață și o linguriță de ulei de măsline.
+* Paste cu carne tocată de vită, sos de roșii și parmezan ras.
+* Pizza din felii de pâine înmuiate în ou și lapte, cu sos de roșii, cubulețe de carne de pui, măsline și parmezan ras.
+* ...
+      `,
+                gustari: `
+### <i data-lucide="coffee"></i> Gustări & Ceaiuri
+
+#### Gustări
+* Piure de mere Golden cu biscuiți sau gofre, scorțișoară Ceylon și ulei MCT.
+* Orez cu lapte de ovăz, cu scorțișoară Ceylon și miere.
+* Clătite cu măr ras și scorțișoară Ceylon.
+* ...
+
+#### Ceaiuri
+* Ghimbir
+* Rooibos
+* Mentă
+* Mușețel
+* Fenicul
+      `,
+            };
+
+            const activeClasses = ["bg-padure-50", "text-padure-600", "font-medium"];
+            const inactiveClasses = ["hover:bg-crem-100", "text-espresso", "font-light"];
+            let currentTab = "principii";
+
+            function switchTab(pageId, element) {
+                currentTab = pageId;
+                window.location.hash = pageId;
+
+                const contentDiv = document.getElementById("content");
+
+                // 1. Efect vizual de tranziție conținut
+                contentDiv.classList.remove("translate-y-0", "opacity-100");
+                contentDiv.classList.add("translate-y-4", "opacity-0");
+
+                // 2. Repoziționează indicatorul fluid pe Desktop
+                if (element && window.innerWidth >= 768) {
+                    const indicator = document.getElementById("desktop-indicator");
+                    const offsetTop = element.offsetTop;
+                    indicator.style.transform = `translateY(${offsetTop}px)`;
+
+                    document.querySelectorAll(".tab-btn").forEach((btn) => {
+                        btn.classList.remove("text-padure-600", "font-medium");
+                        btn.classList.add("text-espresso", "font-light");
+                    });
+                    element.classList.remove("text-espresso", "font-light");
+                    element.classList.add("text-padure-600", "font-medium");
+                }
+
+                // 3. Colorează butoanele pe Mobil
+                document.querySelectorAll(".tab-btn-mob").forEach((btn) => {
+                    const isTarget = btn.getAttribute("onclick").includes(pageId);
+                    if (isTarget) {
+                        btn.classList.add("bg-padure-50", "text-padure-600", "scale-105");
+                    } else {
+                        btn.classList.remove("bg-padure-50", "text-padure-600", "scale-105");
+                    }
+                });
+
+                // 4. Randare Markdown + Procesare dynamică iconițe noi
+                setTimeout(() => {
+                    contentDiv.innerHTML = marked.parse(pages[pageId]);
+
+                    // Re-randează iconițele din conținut după ce Markdown-ul a generat HTML-ul
+                    lucide.createIcons();
+
+                    contentDiv.classList.remove("translate-y-4", "opacity-0");
+                    contentDiv.classList.add("translate-y-0", "opacity-100");
+                }, 150);
+            }
+
+            // Inițializează iconițele Lucide și verifică hash-ul la pornire
+            document.addEventListener("DOMContentLoaded", function () {
+                lucide.createIcons();
+                
+                // Citim hash-ul din URL (fără caracterul #)
+                const hash = window.location.hash.substring(1);
+                
+                // Dacă hash-ul există în lista noastră de pagini, îl folosim, altfel trecem pe 'principii'
+                const activeTab = pages[hash] ? hash : "principii";
+                
+                // Găsim butonul de desktop corespunzător ca să se poziționeze corect indicatorul fluid
+                const targetBtn = Array.from(document.querySelectorAll(".tab-btn")).find(btn => 
+                    btn.getAttribute("onclick").includes(`'${activeTab}'`)
+                );
+                
+                // Încărcăm secțiunea salvată
+                switchTab(activeTab, targetBtn);
+            });
+        </script>
+    </body>
+</html>
